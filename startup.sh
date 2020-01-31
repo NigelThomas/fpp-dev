@@ -11,10 +11,7 @@
 mkdir -p /home/sqlstream/output
 chown sqlstream:sqlstream /home/sqlstream/output
 
-# This test project depends on local data files
-cd /home/sqlstream/${PROJECT_NAME}/data
-gunzip sample*.gz
-cd ..
+# This test project depends on data files that have been mounted to /home/sqlstream/fpp-data
 
 # start s-Server to load the schema
 startsServer

@@ -174,7 +174,7 @@ OPTIONS (
         "f04_context_flag002_PATH" '$.context.flag002',
         "f03_context_flag001_PATH" '$.context.flag001',
 
-        "DIRECTORY" '/home/sqlstream/fpp-dev/data',
+        "DIRECTORY" '/home/sqlstream/fpp-data',
         "FILENAME_PATTERN" 'sample.*\.json'
 
 );

@@ -29,10 +29,13 @@ This pipeline can be used with the test ingest pipeline, but in production will 
 * `typed_ingest_pump.sql`
 * `typed_interface.sql`
 
-### `data` directory
+### `data` directory - seed data
 * `fpp_normalize_min_max.txt` - mean and standard deviation for 1140 features derived from training data
-* `numbered_features_list.txt` - 57 raw features, numberd
-* `
+
+### `fpp-data` directory - sample test data (not included in repository)
+* The `dockerrun.sh` script mounts a data volume (default name is $HOME/fpp-data) into /home/sqlstream/fpp-data
+* This is used for the test pipeline only, and is expected to contain one or more JSON files
+
 ### `doc` directory
 * `fpp_feature_list.txt` - the 1140 derived features in the order they will appear in the array calling DSS
 * `raw_features_list.txt` - the 57 raw features
