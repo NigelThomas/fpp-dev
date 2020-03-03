@@ -8,7 +8,7 @@
 
 # This test project depends on data files that have been mounted to /home/sqlstream/fpp-data
 
-echo ... load the test schema and start pumps
+echo ... load the test schema 
 $SQLSTREAM_HOME/bin/sqllineClient --run=test_pipeline.sql
 
 

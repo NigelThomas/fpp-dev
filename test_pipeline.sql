@@ -22,5 +22,4 @@
 -- now create the ingest pump needed for testing
 !run test/cast_ingest_pump.sql
 
--- and start the pumps
-!run test/test_pumps.sql
+-- pumps will be started by the image launch

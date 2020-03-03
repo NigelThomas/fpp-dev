@@ -537,7 +537,8 @@ LANGUAGE SQL
 DETERMINISTIC
 CONTAINS SQL
 RETURN CASE 
-       WHEN "numerator" IS NULL OR "numerator" = 0.0 OR "denominator" IS NULL OR "denominator" = 0.0 THEN 0.0
+       WHEN "denominator" IS NULL OR "denominator" = 0.0 THEN -0.2
+       WHEN "numerator" IS NULL OR "numerator" = 0.0 THEN 0.0
        ELSE "numerator" / "denominator"
        END;
 
@@ -551,6 +552,7 @@ SELECT STREAM
 , "device_id"
 , "fname" 
 , "fno"
+, "fvalue"
 -- reorder fields as per Kuldeep's presentation
 -- presence
 , "divide"("num_dev_win_168h","denom_dev_win_168h") as "dev_win_168h"
@@ -625,6 +627,7 @@ SELECT STREAM
 , f."device_id"
 , f."fname" 
 , f."fno"
+, f."fvalue"
 -- reorder fields as per Kuldeep's presentation
 -- presence
 , "minmax-scaler"(f."dev_win_168h","min_dev_win_168h","max_dev_win_168h") as "dev_win_168h"
