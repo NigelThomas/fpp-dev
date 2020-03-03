@@ -281,7 +281,7 @@ SELECT STREAM
   THEN
       SUM("confidence") OVER (PARTITION BY "user_id", "fname", "fvalue" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "user_id", "fname" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+      COUNT("fvalue") OVER (PARTITION BY "user_id", "fname","fvalue" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_usr_win_1h"
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -295,7 +295,7 @@ SELECT STREAM
   THEN
       SUM("confidence") OVER (PARTITION BY "device_id", "fname", "fvalue" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "device_id", "fname" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+      COUNT("fvalue") OVER (PARTITION BY "device_id", "fname","fvalue" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_dev_win_1h"
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -314,7 +314,7 @@ SELECT STREAM
   THEN
       SUM("confidence") OVER (PARTITION BY "user_id", "fname", "fvalue" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "user_id", "fname" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+      COUNT("fvalue") OVER (PARTITION BY "user_id", "fname","fvalue" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_usr_win_6h"
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -328,7 +328,7 @@ SELECT STREAM
   THEN
       SUM("confidence") OVER (PARTITION BY "device_id", "fname", "fvalue" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "device_id", "fname" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+      COUNT("fvalue") OVER (PARTITION BY "device_id", "fname","fvalue" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_dev_win_6h"
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -348,7 +348,7 @@ SELECT STREAM
   THEN
       SUM("confidence") OVER (PARTITION BY "user_id", "fname", "fvalue" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "user_id", "fname" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+      COUNT("fvalue") OVER (PARTITION BY "user_id", "fname","fvalue" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_usr_win_24h"
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -362,7 +362,7 @@ SELECT STREAM
   THEN
       SUM("confidence") OVER (PARTITION BY "device_id", "fname", "fvalue" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "device_id", "fname" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+      COUNT("fvalue") OVER (PARTITION BY "device_id", "fname","fvalue" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_dev_win_24h"
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -382,7 +382,7 @@ SELECT STREAM
   THEN
       SUM("confidence") OVER (PARTITION BY "user_id", "fname", "fvalue" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "user_id", "fname" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+      COUNT("fvalue") OVER (PARTITION BY "user_id", "fname","fvalue" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_usr_win_168h"
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -396,7 +396,7 @@ SELECT STREAM
   THEN
       SUM("confidence") OVER (PARTITION BY "device_id", "fname", "fvalue" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "device_id", "fname" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+      COUNT("fvalue") OVER (PARTITION BY "device_id", "fname","fvalue" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_dev_win_168h"
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -416,7 +416,7 @@ SELECT STREAM
   THEN
       SUM("confidence") OVER (PARTITION BY "user_id", "fname", "fvalue" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "user_id", "fname" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+      COUNT("fvalue") OVER (PARTITION BY "user_id", "fname","fvalue" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_usr_win_720h"
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -430,7 +430,7 @@ SELECT STREAM
   THEN
       SUM("confidence") OVER (PARTITION BY "device_id", "fname", "fvalue" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "device_id", "fname" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+      COUNT("fvalue") OVER (PARTITION BY "device_id", "fname","fvalue" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_dev_win_720h"
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
