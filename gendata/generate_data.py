@@ -34,8 +34,8 @@ args = parser.parse_args()
 
 max_trans_per_sec = args.transaction_rate * 2
 
-# initially use CSV format:
-# timestamp|user|device|visitId|f1|f2|...|fN
+# timer to use for records (for "timestamp" feature type)
+record_time = 0
 
 def randomstring(length):
     return (''.join([random.choice(string.ascii_letters) for i in xrange(length)]))
@@ -46,16 +46,16 @@ def randomword(length, cardinality, idx):
    baseval = str(idx).rjust(l, '0')
    return baseval+ randomstring(length-l)
 
-def str_result(value, coltype, context):
-    try:
-        if coltype == "text":
-            return value
-        else:
-            return str(value).decode('utf-8')
-    except UnicodeEncodeError:
-        logger.error("Unable to handle value "+context)
-        print(value)
-        print (type(value))
+# def str_result(value, coltype, context):
+#     try:
+#         if coltype == "text":
+#             return value
+#         else:
+#             return str(value).decode('utf-8')
+#     except UnicodeEncodeError:
+#         logger.error("Unable to handle value "+context)
+#         print(value)
+#         print (type(value))
 
 # 
 def generate_lov_value(lovName, column, coltype):
@@ -64,42 +64,58 @@ def generate_lov_value(lovName, column, coltype):
     entryIdx = lovEntries[lovIndex]
     context = "generating lov for "+lovName+"."+column+" entryIdx="+str(entryIdx)+", coltype="+coltype
     logger.debug(context)
-    result = str_result(lov_data[entryIdx][column], coltype, context)
-    #logger.debug("generating lov for "+lovName+"."+column+" entryIdx="+str(entryIdx)+" = "+result)
-    return result
+    return lov_data[entryIdx][column]
 
 def generate_value(fdesc):
     ftype = fdesc['type']
     logger.debug("generating value for "+str(fdesc))
 
-    if ftype == 'cat':
-        fvalues = fdesc['fvalues']
-        l = len(fvalues)
-        # pick a random value for this feature
-        return fvalues[random.randint(0,l-1)]
+    try:
+        if ftype == 'cat':
+            fvalues = fdesc['fvalues']
+            l = len(fvalues)
+            # pick a random value for this feature
+            return fvalues[random.randint(0,l-1)]
 
-    elif ftype == 'int':
-        return str(random.randint(fdesc['start'], fdesc['end'])).decode('utf-8')
+        elif ftype == 'seq':
+            r = sequence_values[fdesc['name']]
+            sequence_values[fdesc['name']] += 1
+            return r
 
-    elif ftype == 'float':
-        return fdesc['format'].format(random.uniform(fdesc['start'], fdesc['end'])).decode('utf-8')
+        elif ftype == 'timestamp':
+            return record_time
 
-    elif ftype == 'bool':
-        # ignore flength and fstart, return True or False
-        return str(random.randint(0,1) == 1).decode('utf-8')
+        elif ftype == 'constant':
+            return fdesc['value']
 
-    elif ftype == 'text':
-        # generate a completely random string of required length
-        return randomstring(fdesc['length'])
+        elif ftype == 'int':
+            return random.randint(fdesc['start'], fdesc['end'])
 
-    elif ftype == 'lov':
-        # TODO return the selected column of the selected row for this lov
-        
-        # get the randomly selected entry for this lov
-        return generate_lov_value(fdesc['lovName'], fdesc['column'], fdesc['coltype'])
+        elif ftype == 'float':
+            return fdesc['format'].format(random.uniform(fdesc['start'], fdesc['end']))
 
-    else:
-        return "UNEXPECTED TYPE "+ftype
+        elif ftype == 'bool':
+            # ignore flength and fstart, return True or False
+            return (random.randint(0,1) == 1)
+
+        elif ftype == 'text':
+            # generate a completely random string of required length
+            return randomstring(fdesc['length'])
+
+        elif ftype == 'lov':
+            # TODO return the selected column of the selected row for this lov
+            
+            # get the randomly selected entry for this lov
+            return generate_lov_value(fdesc['lovName'], fdesc['column'], fdesc['coltype'])
+
+        elif ftype == 'uuid.hex':
+            return uuid.uuid1().hex
+
+        else:
+            return "UNEXPECTED TYPE "+ftype
+    except:
+        logger.error("Exception in generate_value for "+str(fdesc))
+        raise
 
 
 # TODO this should be an argument
@@ -136,31 +152,44 @@ feature_descs = feature_defs['features']
 feature_count = len(feature_descs)
 feature_names = []
 
+# A dict to contain one running sequence value per 'seq' feature
+sequence_values = {}
+
 for feature_desc in feature_descs:
 
-    feature_names.append(feature_desc['name'])
+    try:
+        feature_names.append(feature_desc['name'])
 
-    if feature_desc['type'] == "cat":
-        feature_desc['coltype'] = "text"
-    elif feature_desc['type'] != 'lov':
-        # inherit coltype from feature type exept for cat and lov
-        # cat is always text, lov defines it already
-        feature_desc['coltype'] = feature_desc['type']
-    elif 'coltype' not in feature_desc:
-        logger.error("no coltype for feature:"+feature_desc['name'])
-        exit(-2);
+        if feature_desc['type'] == "cat":
+            feature_desc['coltype'] = "text"
 
-    # Categorical features with generated lov
-    if feature_desc['type'] == 'cat':
-        fvalues = []
-        logger.debug("preparing values for cat feature "+feature_desc['name'])
-        # make a list of values for this feature
-        for i in xrange(feature_desc['cardinality']):
-            # start the value with the index (zero filled) then fill with random chars
-            fvalues.append(randomword(feature_desc['length'],feature_desc['cardinality'], i))
+        elif feature_desc['type'] == "seq":
+            # initialise a sequence type
+            sequence_values[feature_desc['name']] = feature_desc['start']
+
+        elif feature_desc['type'] != 'lov':
+            # inherit coltype from feature type exept for cat and lov
+            # cat is always text, lov defines it already
+            feature_desc['coltype'] = feature_desc['type']
         
-        feature_desc['fvalues'] = fvalues
+        elif 'coltype' not in feature_desc:
+            logger.error("no coltype for feature:"+feature_desc['name'])
+            exit(-2);
 
+        # Categorical features with generated lov
+        if feature_desc['type'] == 'cat':
+            fvalues = []
+            logger.debug("preparing values for cat feature "+feature_desc['name'])
+            # make a list of values for this feature
+            for i in xrange(feature_desc['cardinality']):
+                # start the value with the index (zero filled) then fill with random chars
+                fvalues.append(randomword(feature_desc['length'],feature_desc['cardinality'], i))
+            
+            feature_desc['fvalues'] = fvalues
+    except:
+        logger.debug("preparing values for feature "+feature_desc['name'])
+        raise
+       
 
 # TODO save the generated features (including values) for later re-use
 # print json.dumps(features)
@@ -190,14 +219,12 @@ for i in xrange(startrange, startrange+int(args.user_count)):
 # print json.dumps(users)
 
 # Now generate calls for random users every second
-
-startsecs = time.time()
+# start time from now (rounded to second)
+startsecs = int(time.time())
 
 
 
 # Generate data for this many "seconds"
-
-print "calltime|userid|deviceid|visitId|"+string.join(feature_names,'|')
 
 output_seconds = int(3600 * args.output_time)
 
@@ -206,6 +233,9 @@ for calltime in xrange(output_seconds):
     # Generate up to this many transactions per second
 
     for counter in xrange(random.randint(1,max_trans_per_sec)):
+        concat_features = {}
+        record_time = calltime+startsecs
+
         # choose a random subscriber
         user = users[random.randrange(len(users))]
         userId = user['id'];
@@ -213,8 +243,6 @@ for calltime in xrange(output_seconds):
         deviceIdx = 0 if deviceCount == 1 else random.randint(0,deviceCount-1)
         deviceId = user['devices'][deviceIdx]
 
-        visitId = uuid.uuid1().hex
-        concat_features = []
 
         lovEntries = []
 
@@ -226,13 +254,12 @@ for calltime in xrange(output_seconds):
 
         for f in xrange(len(feature_descs)):
             fdesc = feature_descs[f]
-            concat_features.append(generate_value(fdesc))
+            concat_features[fdesc['name']] = generate_value(fdesc)
 
-        print "%010d|%d|%d|%s"% (calltime+startsecs, userId, deviceId, visitId ),
-        for fv in concat_features:
-            print "|",
-            print fv.encode('utf-8'),
-        print ""
+        concat_features['userId'] = str(userId)
+        concat_features['deviceId'] = str(deviceId)
+
+        print json.dumps(concat_features)
    
     # If we want to trickle the data:
     if args.trickle:

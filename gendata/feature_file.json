@@ -10,57 +10,73 @@
                 ]
             }
     ]
+, "unused": [ "name", "version", "isRooted0", "userId0", "customerGroupId", "additionalNotes", "access" ,"time0" ,"latitude0", "longitude0" 
+  ,"accuracy" ,"altitude"
+]
 , "features":
-    [ {"name":"city_cf","type":"float","start":0.0,"end":100.0, "format":"{:5.2f}"}
+    [ {"name":"$oid","type":"seq","start":1}
+    , {"name":"tenantId","type":"text","length":4}
+    , {"name":"matchedPolicyName","type":"constant","value":"not used"}
+    , {"name":"matchedScenarioName","type":"constant","value":"not used"}
+    , {"name":"f57_visitId","type":"uuid.hex"}
+    , {"name":"time", "type":"timestamp"}
+    , {"name":"rulesetExternalId","type":"constant","value":"pilot_1"}
+    , {"name":"rulename","type":"bool"}
+    , {"name":"ruleExpectedValue","type":"bool"}
+    , {"name":"ip_address", "type":"text", "length":64}
+    , {"name":"city_cf","type":"float","start":0.0,"end":100.0, "format":"{:5.2f}"}
+    , {"name":"state_cf","type":"float","start":0.0,"end":100.0, "format":"{:5.2f}"}
     , {"name":"country_cf","type":"float","start":0.0,"end":100.0, "format":"{:5.2f}"}
     , {"name":"f01_context_client","type":"cat","length":8,"cardinality":100}
     , {"name":"f02_context_events","type":"cat","length":10,"cardinality":10}
     , {"name":"f03_context_flag001","type":"bool"}
     , {"name":"f04_context_flag002","type":"bool"}
     , {"name":"f05_context_usergroups","type":"cat","length":16,"cardinality":100}
-    , {"name":"f07_browserName","type":"cat","length":16,"cardinality":100}
-    , {"name":"f08_browserVersion","type":"cat","length":16,"cardinality":1000}
-    , {"name":"f09_isRooted","type":"bool"}
-    , {"name":"f10_networkIp","type":"text","length":20}
-    , {"name":"f11_osFamily","type":"cat","length":8,"cardinality":100}
-    , {"name":"f12_osName","type":"cat","length":8,"cardinality":8}
-    , {"name":"f13_osReleaseDateOrder","type":"int","start":1,"end":100}
-    , {"name":"f14_osVersionOfFamily","type":"int","start":1,"end":99}
-    , {"name":"f15_osVersion","type":"int","start":1,"end":100}
-    , {"name":"f16_screenHeight","type":"lov","lovName":"screens","column":"h", "coltype":"int"}
-    , {"name":"f17_screenWidth","type":"lov","lovName":"screens","column":"w", "coltype":"int"}
-    , {"name":"f18_userAgent","type":"cat","length":100,"cardinality":1000}
-    , {"name":"f19_fingerprint","type":"cat","length":64,"cardinality":1000}
-    , {"name":"f20_manufacturer","type":"cat","length":16,"cardinality":1000}
-    , {"name":"f21_model","type":"cat","length":16,"cardinality":1000}
-    , {"name":"f22_source","type":"cat","length":8,"cardinality":10}
-    , {"name":"f23_hwAddress","type":"text","length":64}
-    , {"name":"f24_type","type":"cat","length":8,"cardinality":10}
-    , {"name":"f25_isBlueToothEnabled","type":"bool"}
-    , {"name":"f26_isLocationEnabled","type":"bool"}
-    , {"name":"f27_isWiFiEnabled","type":"bool"}
-    , {"name":"f28_family","type":"cat","length":8,"cardinality":100}
-    , {"name":"f29_city_code","type":"lov","lovName":"cities","column":"city_code", "coltype":"text"}
-    , {"name":"f30_city","type":"lov","lovName":"cities","column":"city", "coltype":"text"}
-    , {"name":"f31_postal_code","type":"cat","length":16,"cardinality":1000}
-    , {"name":"f32_time_zone","type":"int","start":-12,"end":12}
-    , {"name":"f33_country_code","type":"lov","lovName":"cities","column":"country_code", "coltype":"text"}
-    , {"name":"f34_country","type":"lov","lovName":"cities","column":"country", "coltype":"text"}
-    , {"name":"f37_continent","type":"cat","length":8,"cardinality":10} 
-    , {"name":"f38_dma","type":"int","start":1,"end":1000}
-    , {"name":"f39_lat","type":"lov","lovName":"cities","column":"lat", "coltype":"float"}
-    , {"name":"f40_lon","type":"lov","lovName":"cities","column":"lon", "coltype":"float"}
-    , {"name":"f41_msa","type":"int","start":0,"end":999999}
-    , {"name":"f42_region","type":"lov","lovName":"cities","column":"state", "coltype":"text"}
-    , {"name":"f43_domain_sld","type":"cat","length":16,"cardinality":100}
-    , {"name":"f44_domain_tld","type":"cat","length":8,"cardinality":100}
-    , {"name":"f45_asn","type":"int","start":1,"end":999999}
-    , {"name":"f46_carrier","type":"cat","length":64,"cardinality":1000}
-    , {"name":"f47_connection_type","type":"cat","length":16,"cardinality":100}
-    , {"name":"f48_hosting_facility","type":"bool"}
-    , {"name":"f49_ip_routing_type","type":"cat","length":16,"cardinality":1000}
-    , {"name":"f50_line_speed","type":"cat","length":8,"cardinality":100}
-    , {"name":"f51_organization","type":"cat","length":64,"cardinality":100}
-    , {"name":"f55_ip_type","type":"cat","length":8,"cardinality":10}
+    , {"name":"f07_gemaltoRiskEngine_attributes_deviceBrowser_browserName","type":"cat","length":16,"cardinality":100}
+    , {"name":"f08_gemaltoRiskEngine_attributes_deviceBrowser_browserVersion","type":"cat","length":16,"cardinality":1000}
+    , {"name":"f09_gemaltoRiskEngine_attributes_deviceBrowser_isRooted","type":"bool"}
+    , {"name":"f10_gemaltoRiskEngine_attributes_deviceBrowser_networkIp","type":"text","length":20}
+    , {"name":"f11_gemaltoRiskEngine_attributes_deviceBrowser_osFamily","type":"cat","length":8,"cardinality":100}
+    , {"name":"f12_gemaltoRiskEngine_attributes_deviceBrowser_osName","type":"cat","length":8,"cardinality":8}
+    , {"name":"f13_gemaltoRiskEngine_attributes_deviceBrowser_osReleaseDateOrder","type":"int","start":1,"end":100}
+    , {"name":"f14_gemaltoRiskEngine_attributes_deviceBrowser_osVersionOfFamily","type":"int","start":1,"end":99}
+    , {"name":"f15_gemaltoRiskEngine_attributes_deviceBrowser_osVersion","type":"int","start":1,"end":100}
+    , {"name":"f16_screenHeight-NA","type":"lov","lovName":"screens","column":"h", "coltype":"int"}
+    , {"name":"f17_screenWidth-NA","type":"lov","lovName":"screens","column":"w", "coltype":"int"}
+    , {"name":"f18_gemaltoRiskEngine_attributes_deviceBrowser_userAgent","type":"cat","length":100,"cardinality":1000}
+    , {"name":"f19_gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_fingerprint","type":"cat","length":64,"cardinality":1000}
+    , {"name":"f20_gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_manufacturer","type":"cat","length":16,"cardinality":1000}
+    , {"name":"f21_gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_model","type":"cat","length":16,"cardinality":1000}
+    , {"name":"f22_gemaltoRiskEngine_attributes_deviceMobileApp_location_signals_source","type":"cat","length":8,"cardinality":10}
+    , {"name":"f23_gemaltoRiskEngine_attributes_deviceMobileApp_network_signals_hwAddress","type":"text","length":64}
+    , {"name":"f24_gemaltoRiskEngine_attributes_deviceMobileApp_network_signals_type","type":"cat","length":8,"cardinality":10}
+    , {"name":"f25_gemaltoRiskEngine_attributes_deviceMobileApp_platformSettings_signals_isBluetoothEnabled","type":"bool"}
+    , {"name":"f26_gemaltoRiskEngine_attributes_deviceMobileApp_platformSettings_signals_isLocationEnabled","type":"bool"}
+    , {"name":"f27_gemaltoRiskEngine_attributes_deviceMobileApp_platformSettings_signals_isWifiEnabled","type":"bool"}
+    , {"name":"f28_gemaltoRiskEngine_attributes_deviceMobileApp_platform_signals_family","type":"cat","length":8,"cardinality":100}
+    , {"name":"f29_area_code_NA","type":"lov","lovName":"cities","column":"city_code", "coltype":"text"}
+    , {"name":"f30_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CityData_city","type":"lov","lovName":"cities","column":"city", "coltype":"text"}
+    , {"name":"f31_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CityData_postal_code","type":"cat","length":16,"cardinality":1000}
+    , {"name":"f32_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CityData_time_zone","type":"int","start":-12,"end":12}
+    , {"name":"f33_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CountryData_country_code","type":"lov","lovName":"cities","column":"country_code", "coltype":"text"}
+    , {"name":"f34_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CountryData_country","type":"lov","lovName":"cities","column":"country", "coltype":"text"}
+    , {"name":"f37_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_continent","type":"cat","length":8,"cardinality":10} 
+    , {"name":"f35_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_StateData_state_code", "type":"lov", "lovName":"cities", "column":"city_code", "coltype":"text"}
+    , {"name":"f36_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_StateData_state","type":"lov", "lovName":"cities", "column":"state", "coltype":"text"}
+    , {"name":"f38_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_dma","type":"int","start":1,"end":1000}
+    , {"name":"f39_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_latitude","type":"lov","lovName":"cities","column":"lat", "coltype":"float"}
+    , {"name":"f40_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_longitude","type":"lov","lovName":"cities","column":"lon", "coltype":"float"}
+    , {"name":"f41_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_msa","type":"int","start":0,"end":999999}
+    , {"name":"f42_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_region","type":"lov","lovName":"cities","column":"state", "coltype":"text"}
+    , {"name":"f43_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Network_Domain_sld","type":"cat","length":16,"cardinality":100}
+    , {"name":"f44_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Network_Domain_tld","type":"cat","length":8,"cardinality":100}
+    , {"name":"f45_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Network_asn","type":"int","start":1,"end":999999}
+    , {"name":"f46_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Network_carrier","type":"cat","length":64,"cardinality":1000}
+    , {"name":"f47_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Network_connection_type","type":"cat","length":16,"cardinality":100}
+    , {"name":"f48_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Network_hosting_facility","type":"bool"}
+    , {"name":"f49_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Network_ip_routing_type","type":"cat","length":16,"cardinality":1000}
+    , {"name":"f50_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Network_line_speed","type":"cat","length":8,"cardinality":100}
+    , {"name":"f51_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Network_organization","type":"cat","length":64,"cardinality":100}
+    , {"name":"f55_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_ip_type","type":"cat","length":8,"cardinality":10}
   ]
 }
