@@ -13,7 +13,13 @@ set path '"feature_engineering"';
 create or replace view "fe_pipeline_step_010"
 as
 select stream
-  "transaction_id" 
+  "transaction_id"
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , coalesce("user_id",'NULL') as "user_id"
 , coalesce("device_id",'NULL') as "device_id"
 , coalesce("city_cf",'50') as "city_cf"
@@ -84,6 +90,12 @@ create or replace view "fe_pipeline_step_100"
 as
 select stream
   "transaction_id" 
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id" 
 , "device_id" 
 , "context_client" 
@@ -166,6 +178,12 @@ CREATE OR REPLACE FUNCTION "unpivot_features"
 ) RETURNS TABLE
 ( ROWTIME TIMESTAMP
 , "transaction_id" VARCHAR(64)
+, "tenantId" VARCHAR(256)
+, "signals" VARCHAR(102400)
+, "headers" VARCHAR(102400)
+, "neustar" VARCHAR(102400)
+, "eval" VARCHAR(102400)
+, "score" VARCHAR(1024)
 , "user_id" VARCHAR(64)
 , "device_id" VARCHAR(64)
 , "fname" VARCHAR(128)
@@ -197,6 +215,12 @@ CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_200_pump" STOPPED
 AS
 INSERT INTO "interface"."fe_pipeline_step_200"
 ( "transaction_id"
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"
 , "device_id"
 , "fname"
@@ -205,6 +229,12 @@ INSERT INTO "interface"."fe_pipeline_step_200"
 )
 SELECT STREAM 
   "transaction_id"
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"
 , "device_id"
 , "fname"
@@ -220,6 +250,12 @@ CREATE OR REPLACE VIEW "fe_pipeline_step_220"
 AS 
 SELECT STREAM 
   "transaction_id"
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"
 , "device_id"
 , "fname"
@@ -270,6 +306,12 @@ CREATE OR REPLACE VIEW "fe_pipeline_step_500"
 AS
 SELECT STREAM
   "transaction_id"
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"
 , "device_id"
 , "fname" 
@@ -453,6 +495,12 @@ CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_500_pump" STOPPED
 AS
 INSERT INTO "interface"."fe_pipeline_step_500"
 ( "transaction_id"
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"
 , "device_id"
 , "fname"
@@ -492,6 +540,12 @@ INSERT INTO "interface"."fe_pipeline_step_500"
 )
 SELECT STREAM 
   "transaction_id"
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"
 , "device_id"
 , "fname"
@@ -548,6 +602,12 @@ CREATE OR REPLACE VIEW "fe_pipeline_step_510"
 AS
 SELECT STREAM
   "transaction_id"
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"
 , "device_id"
 , "fname" 
@@ -623,6 +683,12 @@ CREATE OR REPLACE VIEW "fe_pipeline_step_520"
 AS
 SELECT STREAM
   f."transaction_id"
+, f."tenantId"
+, f."signals" 
+, f."headers" 
+, f."neustar" 
+, f."eval" 
+, f."score" 
 , f."user_id"
 , f."device_id"
 , f."fname" 
@@ -667,6 +733,12 @@ CREATE OR REPLACE VIEW "fe_pipeline_step_600"
 AS
 SELECT STREAM
   "transaction_id"
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"
 , "device_id"
 , "fname" 
@@ -706,6 +778,12 @@ CREATE OR REPLACE FUNCTION "pivot_features"
 ) RETURNS TABLE
 ( ROWTIME TIMESTAMP
 , "transaction_id" varchar(64)
+, "tenantId" VARCHAR(256)
+, "signals" VARCHAR(102400)
+, "headers" VARCHAR(102400)
+, "neustar" VARCHAR(102400)
+, "eval" VARCHAR(102400)
+, "score" VARCHAR(1024)
 , "device_id" varchar(64)
 , "user_id" varchar(64)
 -- the following columns are all the original raw features
@@ -797,6 +875,12 @@ CREATE OR REPLACE VIEW "fe_pipeline_step_650"
 AS
 SELECT STREAM 
   "transaction_id"
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"
 , "device_id"
 -- get first half of each combined field for the xxx_win values
@@ -924,7 +1008,12 @@ CREATE OR REPLACE VIEW "fe_pipeline_step_660"
 AS
 SELECT STREAM
   "transaction_id" 
-, "user_id" 
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" , "user_id" 
 , "device_id" 
 , '[[' ||"context_client_win" 
 || ',' ||  "context_events_win" 
@@ -1050,12 +1139,23 @@ CREATE OR REPLACE PUMP "interface"."fe_pipeline_pump" STOPPED
 AS
 INSERT INTO "interface"."fe_pipeline_out"
 ( "transaction_id" 
-, "user_id" 
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" , "user_id" 
 , "device_id" 
 , "features_1140" 
 )
 SELECT STREAM 
   "transaction_id" 
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id" 
 , "device_id" 
 , "features_1140" 

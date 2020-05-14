@@ -44,6 +44,12 @@ CREATE OR REPLACE VIEW "scoring_step_110"
 AS 
 SELECT STREAM
   "transaction_id" 
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id" 
 , "device_id" 
 , '{ "input_features": ' || 
@@ -133,6 +139,12 @@ SELECT * FROM (
 CREATE OR REPLACE VIEW "scoring_step_130" AS
 SELECT STREAM 
   "transaction_id"  
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"        
 , "device_id"    
 , "post_data"     
@@ -158,6 +170,12 @@ CREATE OR REPLACE PUMP "interface"."scoring_pipeline_out_pump" STOPPED
 AS
 INSERT INTO "interface"."scoring_pipeline_out"
 ( "transaction_id" 
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"       
 , "device_id"     
 , "post_data"    
@@ -172,6 +190,12 @@ INSERT INTO "interface"."scoring_pipeline_out"
 )
 SELECT STREAM 
   "transaction_id" 
+, "tenantId"
+, "signals" 
+, "headers" 
+, "neustar" 
+, "eval" 
+, "score" 
 , "user_id"       
 , "device_id"     
 , "post_data"    

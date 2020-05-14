@@ -16,7 +16,12 @@ SET SCHEMA '"interface"';
 -- Assumption - the data from FPP will be joined and then delivered into this interface stream
 
 CREATE OR REPLACE STREAM "transactions"
-( "transaction_id" varchar(64)
+( "transaction_id" varchar(64)    "tenantId" VARCHAR(256),
+, "signals" VARCHAR(102400)
+, "headers" VARCHAR(102400)
+, "neustar" VARCHAR(102400)
+, "eval" VARCHAR(102400)
+, "score" VARCHAR(1024)
 , "device_id" varchar(64)
 , "user_id" varchar(64)
 , "city_cf" varchar(8)
@@ -85,6 +90,11 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_200"
 ( "transaction_id" VARCHAR(64)
 , "user_id" VARCHAR(64)
 , "device_id" VARCHAR(64)
+, "signals" VARCHAR(102400)
+, "headers" VARCHAR(102400)
+, "neustar" VARCHAR(102400)
+, "eval" VARCHAR(102400)
+, "score" VARCHAR(1024)
 , "fname" VARCHAR(128)
 , "fno" INTEGER
 , "fvalue" VARCHAR(64)
@@ -94,6 +104,12 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_500"
 ( "transaction_id" VARCHAR(64)
 , "user_id" VARCHAR(64)
 , "device_id" VARCHAR(64)
+, "tenantId" VARCHAR(256)
+, "signals" VARCHAR(102400)
+, "headers" VARCHAR(102400)
+, "neustar" VARCHAR(102400)
+, "eval" VARCHAR(102400)
+, "score" VARCHAR(1024)
 , "fname" VARCHAR(128)
 , "fno" INTEGER
 , "fvalue" VARCHAR(64)
@@ -136,6 +152,12 @@ CREATE OR REPLACE STREAM "interface"."fe_pipeline_out"
 ( "transaction_id" VARCHAR(64)
 , "user_id" VARCHAR(64)
 , "device_id" VARCHAR(64)
+, "tenantId" VARCHAR(256)
+, "signals" VARCHAR(102400)
+, "headers" VARCHAR(102400)
+, "neustar" VARCHAR(102400)
+, "eval" VARCHAR(102400)
+, "score" VARCHAR(1024)
 , "features_1140" VARCHAR(32000)
 );
 
@@ -145,6 +167,12 @@ CREATE OR REPLACE STREAM "interface"."scoring_pipeline_out"
 ("transaction_id"       VARCHAR(64)
 , "user_id"             VARCHAR(64)
 , "device_id"           VARCHAR(64)
+, "tenantId" VARCHAR(256)
+, "signals" VARCHAR(102400)
+, "headers" VARCHAR(102400)
+, "neustar" VARCHAR(102400)
+, "eval" VARCHAR(102400)
+, "score" VARCHAR(1024)
 , "post_data"           VARCHAR(32000)
 , "httpResult"          INTEGER           -- the HTTP status
 , "httpResponse"        VARCHAR(1000)     -- this is the JSON response
