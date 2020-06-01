@@ -176,7 +176,7 @@ OPTIONS (
 
         "DIRECTORY" '/home/sqlstream/fpp-data/gendata/data',
         "FILENAME_PATTERN" 'data.*\.gz',
-        "FILENAME_COMPRESSION" 'gzip'
+        "FILE_COMPRESSION" 'gzip'
 );
 
 -- add the missing feature columns
