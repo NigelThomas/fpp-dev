@@ -99,7 +99,7 @@ CREATE OR REPLACE FOREIGN STREAM "sample_json_ingest"."sample_json_in_fs"
 OPTIONS (
 "PARSER" 'JSON',
         "ROW_PATH" '$',
-        "$oid_PATH" '$._id.$oid',
+        "$oid_PATH" '$.oid',
         "tenantId_PATH" '$.tenantId',
         "userId_PATH" '$.userId',
         "time_PATH" '$.time',

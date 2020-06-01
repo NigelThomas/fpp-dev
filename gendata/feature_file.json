@@ -14,7 +14,7 @@
   ,"accuracy" ,"altitude"
 ]
 , "features":
-    [ {"name":"$oid","type":"seq","start":1}
+    [ {"name":"oid","type":"seq","start":1}
     , {"name":"tenantId","type":"text","length":4}
     , {"name":"matchedPolicyName","type":"constant","value":"not used"}
     , {"name":"matchedScenarioName","type":"constant","value":"not used"}
