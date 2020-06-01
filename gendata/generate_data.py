@@ -92,7 +92,8 @@ def generate_value(fdesc):
             return random.randint(fdesc['start'], fdesc['end'])
 
         elif ftype == 'float':
-            return fdesc['format'].format(random.uniform(fdesc['start'], fdesc['end']))
+            return float(fdesc['format'].format(random.uniform(fdesc['start'], fdesc['end'])))
+            #return random.uniform(fdesc['start'], fdesc['end'])
 
         elif ftype == 'bool':
             # ignore flength and fstart, return True or False
