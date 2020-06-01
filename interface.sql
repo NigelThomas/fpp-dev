@@ -16,7 +16,8 @@ SET SCHEMA '"interface"';
 -- Assumption - the data from FPP will be joined and then delivered into this interface stream
 
 CREATE OR REPLACE STREAM "transactions"
-( "transaction_id" varchar(64)    "tenantId" VARCHAR(256),
+( "transaction_id" varchar(64) 
+, "tenantId" VARCHAR(256)
 , "signals" VARCHAR(102400)
 , "headers" VARCHAR(102400)
 , "neustar" VARCHAR(102400)
@@ -94,6 +95,7 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_200"
 , "headers" VARCHAR(102400)
 , "neustar" VARCHAR(102400)
 , "eval" VARCHAR(102400)
+, "tenantId" VARCHAR(256)
 , "score" VARCHAR(1024)
 , "fname" VARCHAR(128)
 , "fno" INTEGER

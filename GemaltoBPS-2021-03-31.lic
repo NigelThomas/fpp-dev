@@ -1,0 +1,9 @@
+#Please Do not delete this comment line.
+INCREMENT engine sqlstreamd 6.0 31-mar-2021 uncounted \
+	VENDOR_STRING="name:BPS max-threads:0 installation-id:null \
+	license-check-period:2h usage-check-period:never \
+	usage-report-period:never throttle-when:never" HOSTID=ANY \
+	ISSUER="SQLstream Inc." ISSUED=3-apr-2020 START=1-apr-2020 \
+	SIGN="0554 2E61 DA2F B34A 2E3D 9DEE 3A58 CB13 C265 81DA E45D \
+	89EB 5D02 CE64 A40C 034D F620 EEE9 1B59 05FF 9DCD 7DD4 9E35 \
+	2333 92D6 B55F 24F8 27EC 32F0 7E23" SIGN2=BF0BDBCA4286
