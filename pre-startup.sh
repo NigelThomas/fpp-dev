@@ -12,6 +12,7 @@ echo ... load the test schema
 $SQLSTREAM_HOME/bin/sqllineClient --run=test_pipeline.sql
 
 cd /home/sqlstream/fpp-dev/gendata/
+mkdir data
 python generate_data.py -F feature_file.csv -c 1000000 -n -t 6 | split --bytes=50M --filter='gzip > data/$FILE.gz' - data
 
 

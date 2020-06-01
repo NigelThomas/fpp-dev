@@ -2,7 +2,7 @@
 GIT_ACCOUNT=https://github.com/NigelThomas
 GIT_PROJECT_NAME=fpp-dev
 BASE_IMAGE=sqlstream/streamlab-git
-: ${BASE_IMAGE_LABEL:=release}
+: ${BASE_IMAGE_LABEL:=latest}
 
 : ${CONTAINER_NAME:=fpp-dev}
 
