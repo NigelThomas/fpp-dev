@@ -13,7 +13,7 @@
 
 
 !run feature_engineering.sql
-!run scoring_pipeline.sql
+--!run scoring_pipeline.sql
 
 !run test/test_output.sql
 -- !run test/dump_input.sql
