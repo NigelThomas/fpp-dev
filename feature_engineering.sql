@@ -210,6 +210,7 @@ FROM STREAM
 );
 
 -- materialize step 200 into an interface stream that we can dump for testing
+-- materialize step 220 into an interface stream that we can dump for testing
 
 CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_200_pump" STOPPED
 AS
@@ -489,7 +490,6 @@ SELECT STREAM
 FROM "fe_pipeline_step_220";
 
 
--- materialize step 220 into an interface stream that we can dump for testing
 
 CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_500_pump" STOPPED
 AS

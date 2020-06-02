@@ -39,7 +39,7 @@
     , {"name":"f11_gemaltoRiskEngine_attributes_deviceBrowser_osFamily","type":"cat","length":8,"cardinality":100}
     , {"name":"f12_gemaltoRiskEngine_attributes_deviceBrowser_osName","type":"cat","length":8,"cardinality":8}
     , {"name":"f13_gemaltoRiskEngine_attributes_deviceBrowser_osReleaseDateOrder","type":"int","start":1,"end":100}
-    , {"name":"f14_gemaltoRiskEngine_attributes_deviceBrowser_osVersionOfFamily","type":"int","start":1,"end":99}
+    , {"name":"f14_gemaltoRiskEngine_attributes_deviceBrowser_osVersionOfFamily","type":"float","start":1.0,"end":9.9,"format":"{:2.1f}"}
     , {"name":"f15_gemaltoRiskEngine_attributes_deviceBrowser_osVersion","type":"int","start":1,"end":100}
     , {"name":"f16_screenHeight-NA","type":"lov","lovName":"screens","column":"h", "coltype":"int"}
     , {"name":"f17_screenWidth-NA","type":"lov","lovName":"screens","column":"w", "coltype":"int"}

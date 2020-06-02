@@ -24,7 +24,10 @@ then
     HOST_JNDI_MOUNT="-v ${HOST_JNDI_DIR:=$HERE/jndi}:$CONTAINER_JNDI_DIR"
 fi
 
+# mount the project itself rather than getting with git
+
 docker run -v ${HOST_DATA_SOURCE:=$HOME/fpp-data}:$CONTAINER_DATA_SOURCE $HOST_TGT_MOUNT $HOST_JNDI_MOUNT \
+           -v $(pwd -P):/home/sqlstream/fpp-dev \
            -e GIT_ACCOUNT=$GIT_ACCOUNT -e GIT_PROJECT_NAME=$GIT_PROJECT_NAME -e GIT_PROJECT_HASH=$GIT_PROJECT_HASH \
            -e LOAD_SLAB_FILES= \
            -e SQLSTREAM_HEAP_MEMORY=${SQLSTREAM_HEAP_MEMORY:=4096m} \
