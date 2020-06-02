@@ -80,7 +80,7 @@ SELECT STREAM
   "txn_time" AS ROWTIME      -- promote to ROWTIME
 , "f57_visitId"        -- identifies the transaction 
 , "userId" AS "tenantId" 
-, 'signals:'||"deviceId" AS "signals" 
+, 'signals:'||"f19_gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_fingerprint" AS "signals" 
 , 'headers:'||"f07_gemaltoRiskEngine_attributes_deviceBrowser_browserName" AS "headers" 
 , 'neustar:'||"f11_gemaltoRiskEngine_attributes_deviceBrowser_osFamily"  AS "neustar"
 , 'eval:'||"f30_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CityData_city" AS "eval" 
