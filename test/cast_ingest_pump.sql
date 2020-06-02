@@ -7,6 +7,12 @@ AS
 INSERT INTO "interface"."transactions"
 ( ROWTIME
 , "transaction_id"
+, "tenantId" 
+, "signals" 
+, "headers" 
+, "neustar"
+, "eval" 
+, "score" 
 , "user_id"
 , "device_id"
 , "city_cf" 
@@ -73,6 +79,12 @@ INSERT INTO "interface"."transactions"
 SELECT STREAM
   "txn_time" AS ROWTIME      -- promote to ROWTIME
 , "f57_visitId"        -- identifies the transaction 
+, "userId" AS "tenantId" 
+, 'signals:'||"deviceId" AS "signals" 
+, 'headers:'||"f07_gemaltoRiskEngine_attributes_deviceBrowser_browserName" AS "headers" 
+, 'neustar:'||"f11_gemaltoRiskEngine_attributes_deviceBrowser_osFamily"  AS "neustar"
+, 'eval:'||"f30_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CityData_city" AS "eval" 
+, 'score:'||"f20_gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_manufacturer" AS "score" 
 , "userId"               -- used for windows
 , "f19_gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_fingerprint"             -- used for windows = deviceId (at least for mobile)
 , CAST("city_cf" AS VARCHAR(8))               -- locations come with confidence
