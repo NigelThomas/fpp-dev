@@ -188,7 +188,7 @@ CREATE OR REPLACE FUNCTION "unpivot_features"
 , "device_id" VARCHAR(64)
 , "fname" VARCHAR(128)
 , "fno" INTEGER
-, "fvalue" VARCHAR(64)
+, "fvalue" VARCHAR(256)
 )
 LANGUAGE JAVA
 PARAMETER STYLE SYSTEM DEFINED JAVA

@@ -54,17 +54,17 @@ CREATE OR REPLACE FOREIGN STREAM "sample_json_ingest"."sample_json_in_fs"
     "f40_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_longitude" DOUBLE,
     "f34_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CountryData_country" VARCHAR(16),
     "f33_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CountryData_country_code" VARCHAR(4),
-    "country_cf" DOUBLE,
+    "country_cf" INTEGER,
     "f42_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_region" VARCHAR(16),
     "f36_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_StateData_state" VARCHAR(32),
     "f35_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_StateData_state_code" VARCHAR(4),
-    "state_cf" DOUBLE,
+    "state_cf" INTEGER,
     "f38_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_dma" INTEGER,
     "f41_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_msa" BIGINT,
     "f30_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CityData_city" VARCHAR(32),
     "f31_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CityData_postal_code" VARCHAR(16),
     "f32_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_Location_CityData_time_zone" DECIMAL(3,1),
-    "city_cf" DOUBLE,
+    "city_cf" INTEGER,
     "name" VARCHAR(64),
     "f27_gemaltoRiskEngine_attributes_deviceMobileApp_platformSettings_signals_isWifiEnabled" BOOLEAN,
     "f26_gemaltoRiskEngine_attributes_deviceMobileApp_platformSettings_signals_isLocationEnabled" BOOLEAN,
@@ -112,7 +112,7 @@ OPTIONS (
         "f10_gemaltoRiskEngine_attributes_deviceBrowser_networkIp_PATH" '$.f10_gemaltoRiskEngine_attributes_deviceBrowser_networkIp',
         "f18_gemaltoRiskEngine_attributes_deviceBrowser_userAgent_PATH" '$.f18_gemaltoRiskEngine_attributes_deviceBrowser_userAgent',
         "f07_gemaltoRiskEngine_attributes_deviceBrowser_browserName_PATH" '$.f07_gemaltoRiskEngine_attributes_deviceBrowser_browserName',
-        "f08_gemaltoRiskEngine_attributes_deviceBrowser_browserVersion_PATH" '$.f08_gemaltoRiskEngine_attributes_deviceBrowser_browserVersion_PATH',
+        "f08_gemaltoRiskEngine_attributes_deviceBrowser_browserVersion_PATH" '$.f08_gemaltoRiskEngine_attributes_deviceBrowser_browserVersion',
         "f12_gemaltoRiskEngine_attributes_deviceBrowser_osName_PATH" '$.f12_gemaltoRiskEngine_attributes_deviceBrowser_osName',
         "f15_gemaltoRiskEngine_attributes_deviceBrowser_osVersion_PATH" '$.f15_gemaltoRiskEngine_attributes_deviceBrowser_osVersion',
         "f11_gemaltoRiskEngine_attributes_deviceBrowser_osFamily_PATH" '$.f11_gemaltoRiskEngine_attributes_deviceBrowser_osFamily',
@@ -158,7 +158,7 @@ OPTIONS (
         "f20_gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_manufacturer_PATH" '$.f20_gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_manufacturer',
         "f21_gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_model_PATH" '$.f21_gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_model',
         "userId0_PATH" '$.userId0d',
-        "f02_context_events_PATH" '$.f02_context_events_PATH',
+        "f02_context_events_PATH" '$.f02_context_events',
         "f05_context_usergroups_PATH" '$.f05_context_usergroups',
         "customerGroupID_PATH" '$.customerGroupID',
         "f01_context_client_PATH" '$.f01_context_client',
@@ -252,9 +252,9 @@ AS SELECT STREAM *
 , 600 AS "f16_gemaltoRiskEngine_attributes_deviceBrowser_screenHeight"
 , 250 AS  "f17_gemaltoRiskEngine_attributes_deviceBrowser_screenWidth"
 , '111' AS "f29_gemaltoRiskEngine_attributes_ipintelf29ligence_ipinfo_Location_CityData_area_code"
-, 'NULL' AS "f52_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_ProxyData_proxy_level"
-, 'NULL' AS "f53_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_ProxyData_proxy_type"
-, 'NULL' AS "f54_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_anonymizer_status"
+, 'NA' AS "f52_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_ProxyData_proxy_level"
+, 'NA' AS "f53_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_ProxyData_proxy_type"
+, 'NA' AS "f54_gemaltoRiskEngine_attributes_ipintelligence_ipinfo_anonymizer_status"
 FROM "sample_json_ingest"."sample_json_in_fs";
 
 -- For development, throttle the data
@@ -272,7 +272,7 @@ SELECT STREAM *
 FROM STREAM
     ( "throttle"
         ( CURSOR(SELECT STREAM * FROM "sample_json_in")
-        , 1
+        , 500
         )
     );
 
@@ -284,8 +284,8 @@ SELECT STREAM *
      , TIMESTAMP_TO_CHAR('u',"txn_time")  as "f06_day_of_week"
      , TIMESTAMP_TO_CHAR('H',"txn_time")  as "f56_hour_of_day"
 FROM (
-    SELECT STREAM *, TO_TIMESTAMP("time") as "txn_time"
-    --FROM "sample_json_ingest"."sample_throttled_data"
-    FROM "sample_json_ingest"."sample_json_in"
+    SELECT STREAM *, TO_TIMESTAMP("time" * 1000) as "txn_time"
+    FROM "sample_json_ingest"."sample_throttled_data"
+    --FROM "sample_json_ingest"."sample_json_in"
 );
 

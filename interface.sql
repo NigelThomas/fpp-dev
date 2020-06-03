@@ -45,7 +45,7 @@ CREATE OR REPLACE STREAM "transactions"
 , "gemaltoRiskEngine_attributes_deviceBrowser_osVersion" varchar(64)
 , "gemaltoRiskEngine_attributes_deviceBrowser_screenHeight" varchar(64)
 , "gemaltoRiskEngine_attributes_deviceBrowser_screenWidth" varchar(64)
-, "gemaltoRiskEngine_attributes_deviceBrowser_userAgent" varchar(64)
+, "gemaltoRiskEngine_attributes_deviceBrowser_userAgent" varchar(256)
 , "gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_fingerprint" varchar(64)
 , "gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_manufacturer" varchar(64)
 , "gemaltoRiskEngine_attributes_deviceMobileApp_device_signals_model" varchar(64)
@@ -99,7 +99,7 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_200"
 , "score" VARCHAR(1024)
 , "fname" VARCHAR(128)
 , "fno" INTEGER
-, "fvalue" VARCHAR(64)
+, "fvalue" VARCHAR(256)
 );
 
 CREATE OR REPLACE STREAM "fe_pipeline_step_500"
@@ -114,7 +114,7 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_500"
 , "score" VARCHAR(1024)
 , "fname" VARCHAR(128)
 , "fno" INTEGER
-, "fvalue" VARCHAR(64)
+, "fvalue" VARCHAR(256)
 , "num_dev_win_168h" BIGINT
 , "denom_dev_win_168h" BIGINT
 , "num_dev_win_1h" BIGINT

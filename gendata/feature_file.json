@@ -24,9 +24,9 @@
     , {"name":"rulename","type":"bool"}
     , {"name":"ruleExpectedValue","type":"bool"}
     , {"name":"ip_address", "type":"text", "length":64}
-    , {"name":"city_cf","type":"float","start":0.0,"end":100.0, "format":"{:5.2f}"}
-    , {"name":"state_cf","type":"float","start":0.0,"end":100.0, "format":"{:5.2f}"}
-    , {"name":"country_cf","type":"float","start":0.0,"end":100.0, "format":"{:5.2f}"}
+    , {"name":"city_cf","type":"int","start":0,"end":100}
+    , {"name":"state_cf","type":"int","start":0,"end":100}
+    , {"name":"country_cf","type":"int","start":0,"end":100}
     , {"name":"f01_context_client","type":"cat","length":8,"cardinality":100}
     , {"name":"f02_context_events","type":"cat","length":10,"cardinality":10}
     , {"name":"f03_context_flag001","type":"bool"}
