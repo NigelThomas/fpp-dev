@@ -284,8 +284,9 @@ SELECT STREAM *
      , TIMESTAMP_TO_CHAR('u',"txn_time")  as "f06_day_of_week"
      , TIMESTAMP_TO_CHAR('H',"txn_time")  as "f56_hour_of_day"
 FROM (
-    SELECT STREAM *, TO_TIMESTAMP("time" * 1000) as "txn_time"
-    FROM "sample_json_ingest"."sample_throttled_data"
-    --FROM "sample_json_ingest"."sample_json_in"
+    SELECT STREAM *
+         , TO_TIMESTAMP("time" * 1000) as "txn_time"
+    --FROM "sample_json_ingest"."sample_throttled_data"
+    FROM "sample_json_ingest"."sample_json_in"
 );
 
