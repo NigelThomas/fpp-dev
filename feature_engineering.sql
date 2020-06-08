@@ -336,6 +336,19 @@ SELECT STREAM
   ELSE                             -- 'normal' feature
       COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
   END as "denom_usr_win_1h"
+, COUNT(DISTINCT "fvalue") OVER (PARTITION BY "user_id", "fname" RANGE INTERVAL '1' HOUR PRECEDING)
+  AS "usr_vel_1h"
+FROM "fe_pipeline_step_220"
+;
+
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_400_pump" STOPPED
+AS
+INSERT INTO "interface"."fe_pipeline_step_400"
+SELECT STREAM *
+FROM "fe_pipeline_step_400";
+
+CREATE OR REPLACE VIEW "fe_pipeline_step_405"
+AS SELECT STREAM *
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
   THEN
@@ -343,24 +356,23 @@ SELECT STREAM
   ELSE                             -- 'normal' feature
       COUNT("fvalue") OVER (PARTITION BY "device_id", "fname","fvalue" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_dev_win_1h"
-, CASE 
-  WHEN "confidence" IS NOT NULL    -- one of the location features
-  THEN
-      100 * COUNT(*) OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
-  ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
-  END as "denom_dev_win_1h"
-, COUNT(DISTINCT "fvalue") OVER (PARTITION BY "user_id", "fname" RANGE INTERVAL '1' HOUR PRECEDING)
-  AS "usr_vel_1h"
+-- , CASE 
+--   WHEN "confidence" IS NOT NULL    -- one of the location features
+--   THEN
+--       100 * COUNT(*) OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+--   ELSE                             -- 'normal' feature
+--       COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
+--   END as "denom_dev_win_1h"
+, "denom_usr_win_1h" AS "denom_dev_win_1h"
 , COUNT(DISTINCT "fvalue") OVER (PARTITION BY "device_id", "fname" RANGE INTERVAL '1' HOUR PRECEDING)
   AS "dev_vel_1h"
-FROM "fe_pipeline_step_220";
+FROM "interface"."fe_pipeline_step_400";
 
-CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_400_pump" STOPPED
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_405_pump" STOPPED
 AS
-INSERT INTO "interface"."fe_pipeline_step_400"
+INSERT INTO "interface"."fe_pipeline_step_405"
 SELECT STREAM *
-FROM "fe_pipeline_step_400";
+FROM "fe_pipeline_step_405";
 
 
 CREATE OR REPLACE VIEW "fe_pipeline_step_410"
@@ -380,6 +392,20 @@ AS SELECT STREAM *
   ELSE                             -- 'normal' feature
       COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
   END as "denom_usr_win_6h"
+, COUNT(DISTINCT "fvalue") OVER (PARTITION BY "user_id", "fname" RANGE INTERVAL '6' HOUR PRECEDING)
+  AS "usr_vel_6h"
+FROM "interface"."fe_pipeline_step_405"
+;
+
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_410_pump" STOPPED
+AS
+INSERT INTO "interface"."fe_pipeline_step_410"
+SELECT STREAM *
+FROM "fe_pipeline_step_410"
+;
+
+CREATE OR REPLACE VIEW "fe_pipeline_step_415"
+AS SELECT STREAM * 
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
   THEN
@@ -387,24 +413,24 @@ AS SELECT STREAM *
   ELSE                             -- 'normal' feature
       COUNT("fvalue") OVER (PARTITION BY "device_id", "fname","fvalue" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_dev_win_6h"
-, CASE 
-  WHEN "confidence" IS NOT NULL    -- one of the location features
-  THEN
-      100 * COUNT(*) OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
-  ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
-  END as "denom_dev_win_6h"
-, COUNT(DISTINCT "fvalue") OVER (PARTITION BY "user_id", "fname" RANGE INTERVAL '6' HOUR PRECEDING)
-  AS "usr_vel_6h"
+-- , CASE 
+--   WHEN "confidence" IS NOT NULL    -- one of the location features
+--   THEN
+--       100 * COUNT(*) OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+--   ELSE                             -- 'normal' feature
+--       COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '6' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
+--   END as "denom_dev_win_6h"
+, "denom_usr_win_6h" AS "denom_dev_win_6h"
 , COUNT(DISTINCT "fvalue") OVER (PARTITION BY "device_id", "fname" RANGE INTERVAL '6' HOUR PRECEDING)
   AS "dev_vel_6h"
-FROM "interface"."fe_pipeline_step_400";
+FROM "interface"."fe_pipeline_step_410"
+;
 
-CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_410_pump" STOPPED
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_415_pump" STOPPED
 AS
-INSERT INTO "interface"."fe_pipeline_step_410"
+INSERT INTO "interface"."fe_pipeline_step_415"
 SELECT STREAM *
-FROM "fe_pipeline_step_410";
+FROM "fe_pipeline_step_415";
 
 
 CREATE OR REPLACE VIEW "fe_pipeline_step_420"
@@ -425,6 +451,21 @@ SELECT STREAM *
   ELSE                             -- 'normal' feature
       COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
   END as "denom_usr_win_24h"
+, COUNT(DISTINCT "fvalue") OVER (PARTITION BY "user_id", "fname" RANGE INTERVAL '24' HOUR PRECEDING)
+  AS "usr_vel_24h"
+FROM "interface"."fe_pipeline_step_415"
+;
+
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_420_pump" STOPPED
+AS
+INSERT INTO "interface"."fe_pipeline_step_420"
+SELECT STREAM *
+FROM "fe_pipeline_step_420";
+
+
+CREATE OR REPLACE VIEW "fe_pipeline_step_425"
+AS
+SELECT STREAM *
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
   THEN
@@ -432,24 +473,23 @@ SELECT STREAM *
   ELSE                             -- 'normal' feature
       COUNT("fvalue") OVER (PARTITION BY "device_id", "fname","fvalue" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_dev_win_24h"
-, CASE 
-  WHEN "confidence" IS NOT NULL    -- one of the location features
-  THEN
-      100 * COUNT(*) OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
-  ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
-  END as "denom_dev_win_24h"
-, COUNT(DISTINCT "fvalue") OVER (PARTITION BY "user_id", "fname" RANGE INTERVAL '24' HOUR PRECEDING)
-  AS "usr_vel_24h"
+-- , CASE 
+--   WHEN "confidence" IS NOT NULL    -- one of the location features
+--   THEN
+--       100 * COUNT(*) OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+--   ELSE                             -- 'normal' feature
+--       COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '24' HOUR PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
+--   END as "denom_dev_win_24h"
+, "denom_usr_win_24h" AS "denom_dev_win_24h"
 , COUNT(DISTINCT "fvalue") OVER (PARTITION BY "device_id", "fname" RANGE INTERVAL '24' HOUR PRECEDING)
   AS "dev_vel_24h"
-FROM "interface"."fe_pipeline_step_410";
+FROM "interface"."fe_pipeline_step_420";
 
-CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_420_pump" STOPPED
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_425_pump" STOPPED
 AS
-INSERT INTO "interface"."fe_pipeline_step_420"
+INSERT INTO "interface"."fe_pipeline_step_425"
 SELECT STREAM *
-FROM "fe_pipeline_step_420";
+FROM "fe_pipeline_step_425";
 
 
 -- 1 WEEK WINDOWS - 168h
@@ -470,6 +510,20 @@ SELECT STREAM *
   ELSE                             -- 'normal' feature
       COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
   END as "denom_usr_win_168h"
+, COUNT(DISTINCT "fvalue") OVER (PARTITION BY "user_id", "fname" RANGE INTERVAL '7' DAY PRECEDING)
+  AS "usr_vel_168h"
+FROM "interface"."fe_pipeline_step_425";
+
+
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_430_pump" STOPPED
+AS
+INSERT INTO "interface"."fe_pipeline_step_430"
+SELECT STREAM *
+FROM "fe_pipeline_step_430";
+
+CREATE OR REPLACE VIEW "fe_pipeline_step_435"
+AS
+SELECT STREAM *
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
   THEN
@@ -477,24 +531,23 @@ SELECT STREAM *
   ELSE                             -- 'normal' feature
       COUNT("fvalue") OVER (PARTITION BY "device_id", "fname","fvalue" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_dev_win_168h"
-, CASE 
-  WHEN "confidence" IS NOT NULL    -- one of the location features
-  THEN
-      100 * COUNT(*) OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
-  ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
-  END as "denom_dev_win_168h"
-, COUNT(DISTINCT "fvalue") OVER (PARTITION BY "user_id", "fname" RANGE INTERVAL '7' DAY PRECEDING)
-  AS "usr_vel_168h"
+-- , CASE 
+--   WHEN "confidence" IS NOT NULL    -- one of the location features
+--   THEN
+--       100 * COUNT(*) OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+--   ELSE                             -- 'normal' feature
+--       COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
+--   END as "denom_dev_win_168h"
+, "denom_usr_win_168h" AS "denom_dev_win_168h"
 , COUNT(DISTINCT "fvalue") OVER (PARTITION BY "device_id", "fname" RANGE INTERVAL '7' DAY PRECEDING)
   AS "dev_vel_168h"
-FROM "fe_pipeline_step_420";
+FROM "interface"."fe_pipeline_step_430";
 
-CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_430_pump" STOPPED
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_435_pump" STOPPED
 AS
-INSERT INTO "interface"."fe_pipeline_step_430"
+INSERT INTO "interface"."fe_pipeline_step_435"
 SELECT STREAM *
-FROM "fe_pipeline_step_430";
+FROM "fe_pipeline_step_435";
 
 -- 1 MONTH (30 DAY) WINDOWS - s-Server does not currently support INTERVALs in months for windows
 
@@ -515,6 +568,20 @@ SELECT STREAM *
   ELSE                             -- 'normal' feature
       COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
   END as "denom_usr_win_720h"
+, COUNT(DISTINCT "fvalue") OVER (PARTITION BY "user_id", "fname" RANGE INTERVAL '30' DAY PRECEDING)
+  AS "usr_vel_720h"
+FROM "interface"."fe_pipeline_step_435";
+
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_440_pump" STOPPED
+AS
+INSERT INTO "interface"."fe_pipeline_step_440"
+SELECT STREAM *
+FROM "fe_pipeline_step_440";
+
+
+CREATE OR REPLACE VIEW "fe_pipeline_step_445"
+AS
+SELECT STREAM *
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
   THEN
@@ -522,19 +589,17 @@ SELECT STREAM *
   ELSE                             -- 'normal' feature
       COUNT("fvalue") OVER (PARTITION BY "device_id", "fname","fvalue" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
   END as "num_dev_win_720h"
-, CASE 
-  WHEN "confidence" IS NOT NULL    -- one of the location features
-  THEN
-      100 * COUNT(*) OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
-  ELSE                             -- 'normal' feature
-      COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
-  END as "denom_dev_win_720h"
-, COUNT(DISTINCT "fvalue") OVER (PARTITION BY "user_id", "fname" RANGE INTERVAL '30' DAY PRECEDING)
-  AS "usr_vel_720h"
+-- , CASE 
+--   WHEN "confidence" IS NOT NULL    -- one of the location features
+--   THEN
+--       100 * COUNT(*) OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING) 
+--   ELSE                             -- 'normal' feature
+--       COUNT("fvalue") OVER (PARTITION BY "fname" RANGE BETWEEN INTERVAL '30' DAY PRECEDING AND INTERVAL '0.001' SECOND PRECEDING)
+--   END as "denom_dev_win_720h"
+, "denom_usr_win_720h" AS "denom_dev_win_720h"
 , COUNT(DISTINCT "fvalue") OVER (PARTITION BY "device_id", "fname" RANGE INTERVAL '30' DAY PRECEDING)
   AS "dev_vel_720h"
-
-FROM "fe_pipeline_step_430";
+FROM "fe_pipeline_step_440";
 
 
 
@@ -542,7 +607,7 @@ CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_500_pump" STOPPED
 AS
 INSERT INTO "interface"."fe_pipeline_step_500"
 SELECT STREAM *
-FROM "fe_pipeline_step_440";
+FROM "fe_pipeline_step_445";
 
 
 CREATE OR REPLACE FUNCTION "divide"("numerator" DOUBLE, "denominator" DOUBLE)
