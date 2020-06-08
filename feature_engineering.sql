@@ -281,7 +281,7 @@ SELECT STREAM
 FROM "interface"."fe_pipeline_step_200"
 ;
 
--- step 500 - build the Windows
+-- step 400 - build the Windows
 
 
 -- Calculating the Windows
@@ -301,9 +301,11 @@ FROM "interface"."fe_pipeline_step_200"
 -- So now % presence of current city is = (3 * 0.8) / 4 = 0.6
 -- This is done for all 3 location features in all windows
 
+-- single step broken into one step per window period both for clarity and to provide pipeline parallelism
 
+-- each step consists of a view in this schema, a pump, and a stream in the interface schema
 
-CREATE OR REPLACE VIEW "fe_pipeline_step_500"
+CREATE OR REPLACE VIEW "fe_pipeline_step_400"
 AS
 SELECT STREAM
   "transaction_id"
@@ -318,6 +320,7 @@ SELECT STREAM
 , "fname" 
 , "fno"
 , "fvalue"
+, "confidence"
 -- 1 HOUR WINDOWS
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -351,6 +354,17 @@ SELECT STREAM
   AS "usr_vel_1h"
 , COUNT(DISTINCT "fvalue") OVER (PARTITION BY "device_id", "fname" RANGE INTERVAL '1' HOUR PRECEDING)
   AS "dev_vel_1h"
+FROM "fe_pipeline_step_220";
+
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_400_pump" STOPPED
+AS
+INSERT INTO "interface"."fe_pipeline_step_400"
+SELECT STREAM *
+FROM "fe_pipeline_step_400";
+
+
+CREATE OR REPLACE VIEW "fe_pipeline_step_410"
+AS SELECT STREAM * 
 -- 6 HOUR WINDOWS
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -384,7 +398,18 @@ SELECT STREAM
   AS "usr_vel_6h"
 , COUNT(DISTINCT "fvalue") OVER (PARTITION BY "device_id", "fname" RANGE INTERVAL '6' HOUR PRECEDING)
   AS "dev_vel_6h"
+FROM "interface"."fe_pipeline_step_400";
 
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_410_pump" STOPPED
+AS
+INSERT INTO "interface"."fe_pipeline_step_410"
+SELECT STREAM *
+FROM "fe_pipeline_step_410";
+
+
+CREATE OR REPLACE VIEW "fe_pipeline_step_420"
+AS
+SELECT STREAM *
 -- 1 DAY WINDOWS - 24h
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
@@ -418,8 +443,19 @@ SELECT STREAM
   AS "usr_vel_24h"
 , COUNT(DISTINCT "fvalue") OVER (PARTITION BY "device_id", "fname" RANGE INTERVAL '24' HOUR PRECEDING)
   AS "dev_vel_24h"
+FROM "interface"."fe_pipeline_step_410";
+
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_420_pump" STOPPED
+AS
+INSERT INTO "interface"."fe_pipeline_step_420"
+SELECT STREAM *
+FROM "fe_pipeline_step_420";
+
 
 -- 1 WEEK WINDOWS - 168h
+CREATE OR REPLACE VIEW "fe_pipeline_step_430"
+AS
+SELECT STREAM *
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
   THEN
@@ -452,8 +488,19 @@ SELECT STREAM
   AS "usr_vel_168h"
 , COUNT(DISTINCT "fvalue") OVER (PARTITION BY "device_id", "fname" RANGE INTERVAL '7' DAY PRECEDING)
   AS "dev_vel_168h"
+FROM "fe_pipeline_step_420";
+
+CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_430_pump" STOPPED
+AS
+INSERT INTO "interface"."fe_pipeline_step_430"
+SELECT STREAM *
+FROM "fe_pipeline_step_430";
 
 -- 1 MONTH (30 DAY) WINDOWS - s-Server does not currently support INTERVALs in months for windows
+
+CREATE OR REPLACE VIEW "fe_pipeline_step_440"
+AS
+SELECT STREAM *
 , CASE 
   WHEN "confidence" IS NOT NULL    -- one of the location features
   THEN
@@ -487,102 +534,15 @@ SELECT STREAM
 , COUNT(DISTINCT "fvalue") OVER (PARTITION BY "device_id", "fname" RANGE INTERVAL '30' DAY PRECEDING)
   AS "dev_vel_720h"
 
-FROM "fe_pipeline_step_220";
+FROM "fe_pipeline_step_430";
 
 
 
 CREATE OR REPLACE PUMP "interface"."fe_pipeline_step_500_pump" STOPPED
 AS
 INSERT INTO "interface"."fe_pipeline_step_500"
-( "transaction_id"
-, "tenantId"
-, "signals" 
-, "headers" 
-, "neustar" 
-, "eval" 
-, "score" 
-, "user_id"
-, "device_id"
-, "fname"
-, "fno"
-, "fvalue"
-, "num_dev_win_168h"
-, "denom_dev_win_168h"
-, "num_dev_win_1h"
-, "denom_dev_win_1h"
-, "num_dev_win_24h"
-, "denom_dev_win_24h"
-, "num_dev_win_6h"
-, "denom_dev_win_6h"
-, "num_dev_win_720h"
-, "denom_dev_win_720h" 
-, "num_usr_win_168h"
-, "denom_usr_win_168h"
-, "num_usr_win_1h"
-, "denom_usr_win_1h"
-, "num_usr_win_24h"
-, "denom_usr_win_24h"
-, "num_usr_win_6h"
-, "denom_usr_win_6h"
-, "num_usr_win_720h"
-, "denom_usr_win_720h" 
--- velocity
-, "dev_vel_168h"
-, "dev_vel_1h"
-, "dev_vel_24h"
-, "dev_vel_6h"
-, "dev_vel_720h" 
-, "usr_vel_168h"
-, "usr_vel_1h"
-, "usr_vel_24h"
-, "usr_vel_6h"
-, "usr_vel_720h" 
-)
-SELECT STREAM 
-  "transaction_id"
-, "tenantId"
-, "signals" 
-, "headers" 
-, "neustar" 
-, "eval" 
-, "score" 
-, "user_id"
-, "device_id"
-, "fname"
-, "fno"
-, "fvalue"
-, "num_dev_win_168h"
-, "denom_dev_win_168h"
-, "num_dev_win_1h"
-, "denom_dev_win_1h"
-, "num_dev_win_24h"
-, "denom_dev_win_24h"
-, "num_dev_win_6h"
-, "denom_dev_win_6h"
-, "num_dev_win_720h"
-, "denom_dev_win_720h" 
-, "num_usr_win_168h"
-, "denom_usr_win_168h"
-, "num_usr_win_1h"
-, "denom_usr_win_1h"
-, "num_usr_win_24h"
-, "denom_usr_win_24h"
-, "num_usr_win_6h"
-, "denom_usr_win_6h"
-, "num_usr_win_720h"
-, "denom_usr_win_720h" 
--- velocity
-, "dev_vel_168h"
-, "dev_vel_1h"
-, "dev_vel_24h"
-, "dev_vel_6h"
-, "dev_vel_720h" 
-, "usr_vel_168h"
-, "usr_vel_1h"
-, "usr_vel_24h"
-, "usr_vel_6h"
-, "usr_vel_720h" 
-FROM "fe_pipeline_step_500";
+SELECT STREAM *
+FROM "fe_pipeline_step_440";
 
 
 CREATE OR REPLACE FUNCTION "divide"("numerator" DOUBLE, "denominator" DOUBLE)
