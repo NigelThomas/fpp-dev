@@ -599,7 +599,7 @@ SELECT STREAM *
 , "denom_usr_win_720h" AS "denom_dev_win_720h"
 , COUNT(DISTINCT "fvalue") OVER (PARTITION BY "device_id", "fname" RANGE INTERVAL '30' DAY PRECEDING)
   AS "dev_vel_720h"
-FROM "fe_pipeline_step_440";
+FROM "interface"."fe_pipeline_step_440";
 
 
 
