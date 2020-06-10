@@ -120,11 +120,13 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_400"
 , "fvalue" VARCHAR(256)
 , "confidence" INTEGER
 --
-, "num_usr_win_1h" BIGINT
-, "denom_usr_win_1h" BIGINT
+, "num_usr_win_1h_conf" BIGINT
+, "num_usr_win_1h_val" BIGINT
+, "denom_win_1h_conf" BIGINT
+, "denom_win_1h_val" BIGINT
 , "usr_vel_1h" BIGINT
--- , "num_dev_win_1h" BIGINT
--- , "denom_dev_win_1h" BIGINT
+-- , "num_dev_win_1h_conf" BIGINT
+-- , "num_dev_win_1h_val" BIGINT
 -- , "dev_vel_1h" BIGINT
 );
 
@@ -143,11 +145,13 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_405"
 , "fvalue" VARCHAR(256)
 , "confidence" INTEGER
 --
-, "num_usr_win_1h" BIGINT
-, "denom_usr_win_1h" BIGINT
+, "num_usr_win_1h_conf" BIGINT
+, "num_usr_win_1h_val" BIGINT
+, "denom_win_1h_conf" BIGINT
+, "denom_win_1h_val" BIGINT
 , "usr_vel_1h" BIGINT
-, "num_dev_win_1h" BIGINT
-, "denom_dev_win_1h" BIGINT
+, "num_dev_win_1h_conf" BIGINT
+, "num_dev_win_1h_val" BIGINT
 , "dev_vel_1h" BIGINT
 );
 
@@ -166,19 +170,23 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_410"
 , "fvalue" VARCHAR(256)
 , "confidence" INTEGER
 --
-, "num_usr_win_1h" BIGINT
-, "denom_usr_win_1h" BIGINT
+, "num_usr_win_1h_conf" BIGINT
+, "num_usr_win_1h_val" BIGINT
+, "denom_win_1h_conf" BIGINT
+, "denom_win_1h_val" BIGINT
 , "usr_vel_1h" BIGINT
-, "num_dev_win_1h" BIGINT
-, "denom_dev_win_1h" BIGINT
+, "num_dev_win_1h_conf" BIGINT
+, "num_dev_win_1h_val" BIGINT
 , "dev_vel_1h" BIGINT
 --
-, "num_usr_win_6h" BIGINT
-, "denom_usr_win_6h" BIGINT
+, "num_usr_win_6h_conf" BIGINT
+, "num_usr_win_6h_val" BIGINT
+, "denom_win_6h_conf" BIGINT
+, "denom_win_6h_val" BIGINT
 , "usr_vel_6h" BIGINT
--- , "num_dev_win_6h" BIGINT
--- , "denom_dev_win_6h" BIGINT
--- , "dev_vel_6h" BIGINT
+--, "num_dev_win_6h_conf" BIGINT
+--, "num_dev_win_6h_val" BIGINT
+--, "dev_vel_6h" BIGINT
 );
 
 CREATE OR REPLACE STREAM "fe_pipeline_step_415"
@@ -196,18 +204,22 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_415"
 , "fvalue" VARCHAR(256)
 , "confidence" INTEGER
 --
-, "num_usr_win_1h" BIGINT
-, "denom_usr_win_1h" BIGINT
+, "num_usr_win_1h_conf" BIGINT
+, "num_usr_win_1h_val" BIGINT
+, "denom_win_1h_conf" BIGINT
+, "denom_win_1h_val" BIGINT
 , "usr_vel_1h" BIGINT
-, "num_dev_win_1h" BIGINT
-, "denom_dev_win_1h" BIGINT
+, "num_dev_win_1h_conf" BIGINT
+, "num_dev_win_1h_val" BIGINT
 , "dev_vel_1h" BIGINT
 --
-, "num_usr_win_6h" BIGINT
-, "denom_usr_win_6h" BIGINT
+, "num_usr_win_6h_conf" BIGINT
+, "num_usr_win_6h_val" BIGINT
+, "denom_win_6h_conf" BIGINT
+, "denom_win_6h_val" BIGINT
 , "usr_vel_6h" BIGINT
-, "num_dev_win_6h" BIGINT
-, "denom_dev_win_6h" BIGINT
+, "num_dev_win_6h_conf" BIGINT
+, "num_dev_win_6h_val" BIGINT
 , "dev_vel_6h" BIGINT
 );
 
@@ -226,26 +238,32 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_420"
 , "fvalue" VARCHAR(256)
 , "confidence" INTEGER
 --
-, "num_usr_win_1h" BIGINT
-, "denom_usr_win_1h" BIGINT
+, "num_usr_win_1h_conf" BIGINT
+, "num_usr_win_1h_val" BIGINT
+, "denom_win_1h_conf" BIGINT
+, "denom_win_1h_val" BIGINT
 , "usr_vel_1h" BIGINT
-, "num_dev_win_1h" BIGINT
-, "denom_dev_win_1h" BIGINT
+, "num_dev_win_1h_conf" BIGINT
+, "num_dev_win_1h_val" BIGINT
 , "dev_vel_1h" BIGINT
 --
-, "num_usr_win_6h" BIGINT
-, "denom_usr_win_6h" BIGINT
+, "num_usr_win_6h_conf" BIGINT
+, "num_usr_win_6h_val" BIGINT
+, "denom_win_6h_conf" BIGINT
+, "denom_win_6h_val" BIGINT
 , "usr_vel_6h" BIGINT
-, "num_dev_win_6h" BIGINT
-, "denom_dev_win_6h" BIGINT
+, "num_dev_win_6h_conf" BIGINT
+, "num_dev_win_6h_val" BIGINT
 , "dev_vel_6h" BIGINT
 --
-, "num_usr_win_24h" BIGINT
-, "denom_usr_win_24h" BIGINT
+, "num_usr_win_24h_conf" BIGINT
+, "num_usr_win_24h_val" BIGINT
+, "denom_win_24h_conf" BIGINT
+, "denom_win_24h_val" BIGINT
 , "usr_vel_24h" BIGINT
--- , "num_dev_win_24h" BIGINT
--- , "denom_dev_win_24h" BIGINT
--- , "dev_vel_24h" BIGINT
+--, "num_dev_win_24h_conf" BIGINT
+--, "num_dev_win_24h_val" BIGINT
+--, "dev_vel_24h" BIGINT
 );
 
 CREATE OR REPLACE STREAM "fe_pipeline_step_425"
@@ -263,25 +281,31 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_425"
 , "fvalue" VARCHAR(256)
 , "confidence" INTEGER
 --
-, "num_usr_win_1h" BIGINT
-, "denom_usr_win_1h" BIGINT
+, "num_usr_win_1h_conf" BIGINT
+, "num_usr_win_1h_val" BIGINT
+, "denom_win_1h_conf" BIGINT
+, "denom_win_1h_val" BIGINT
 , "usr_vel_1h" BIGINT
-, "num_dev_win_1h" BIGINT
-, "denom_dev_win_1h" BIGINT
+, "num_dev_win_1h_conf" BIGINT
+, "num_dev_win_1h_val" BIGINT
 , "dev_vel_1h" BIGINT
 --
-, "num_usr_win_6h" BIGINT
-, "denom_usr_win_6h" BIGINT
+, "num_usr_win_6h_conf" BIGINT
+, "num_usr_win_6h_val" BIGINT
+, "denom_win_6h_conf" BIGINT
+, "denom_win_6h_val" BIGINT
 , "usr_vel_6h" BIGINT
-, "num_dev_win_6h" BIGINT
-, "denom_dev_win_6h" BIGINT
+, "num_dev_win_6h_conf" BIGINT
+, "num_dev_win_6h_val" BIGINT
 , "dev_vel_6h" BIGINT
 --
-, "num_usr_win_24h" BIGINT
-, "denom_usr_win_24h" BIGINT
+, "num_usr_win_24h_conf" BIGINT
+, "num_usr_win_24h_val" BIGINT
+, "denom_win_24h_conf" BIGINT
+, "denom_win_24h_val" BIGINT
 , "usr_vel_24h" BIGINT
-, "num_dev_win_24h" BIGINT
-, "denom_dev_win_24h" BIGINT
+, "num_dev_win_24h_conf" BIGINT
+, "num_dev_win_24h_val" BIGINT
 , "dev_vel_24h" BIGINT
 );
 
@@ -300,33 +324,41 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_430"
 , "fvalue" VARCHAR(256)
 , "confidence" INTEGER
 --
-, "num_usr_win_1h" BIGINT
-, "denom_usr_win_1h" BIGINT
+, "num_usr_win_1h_conf" BIGINT
+, "num_usr_win_1h_val" BIGINT
+, "denom_win_1h_conf" BIGINT
+, "denom_win_1h_val" BIGINT
 , "usr_vel_1h" BIGINT
-, "num_dev_win_1h" BIGINT
-, "denom_dev_win_1h" BIGINT
+, "num_dev_win_1h_conf" BIGINT
+, "num_dev_win_1h_val" BIGINT
 , "dev_vel_1h" BIGINT
 --
-, "num_usr_win_6h" BIGINT
-, "denom_usr_win_6h" BIGINT
+, "num_usr_win_6h_conf" BIGINT
+, "num_usr_win_6h_val" BIGINT
+, "denom_win_6h_conf" BIGINT
+, "denom_win_6h_val" BIGINT
 , "usr_vel_6h" BIGINT
-, "num_dev_win_6h" BIGINT
-, "denom_dev_win_6h" BIGINT
+, "num_dev_win_6h_conf" BIGINT
+, "num_dev_win_6h_val" BIGINT
 , "dev_vel_6h" BIGINT
 --
-, "num_usr_win_24h" BIGINT
-, "denom_usr_win_24h" BIGINT
+, "num_usr_win_24h_conf" BIGINT
+, "num_usr_win_24h_val" BIGINT
+, "denom_win_24h_conf" BIGINT
+, "denom_win_24h_val" BIGINT
 , "usr_vel_24h" BIGINT
-, "num_dev_win_24h" BIGINT
-, "denom_dev_win_24h" BIGINT
+, "num_dev_win_24h_conf" BIGINT
+, "num_dev_win_24h_val" BIGINT
 , "dev_vel_24h" BIGINT
 --
-, "num_usr_win_168h" BIGINT
-, "denom_usr_win_168h" BIGINT
+, "num_usr_win_168h_conf" BIGINT
+, "num_usr_win_168h_val" BIGINT
+, "denom_win_168h_conf" BIGINT
+, "denom_win_168h_val" BIGINT
 , "usr_vel_168h" BIGINT
--- , "num_dev_win_168h" BIGINT
--- , "denom_dev_win_168h" BIGINT
--- , "dev_vel_168h" BIGINT
+--, "num_dev_win_168h_conf" BIGINT
+--, "num_dev_win_168h_val" BIGINT
+--, "dev_vel_168h" BIGINT
 );
 
 CREATE OR REPLACE STREAM "fe_pipeline_step_435"
@@ -344,32 +376,40 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_435"
 , "fvalue" VARCHAR(256)
 , "confidence" INTEGER
 --
-, "num_usr_win_1h" BIGINT
-, "denom_usr_win_1h" BIGINT
+, "num_usr_win_1h_conf" BIGINT
+, "num_usr_win_1h_val" BIGINT
+, "denom_win_1h_conf" BIGINT
+, "denom_win_1h_val" BIGINT
 , "usr_vel_1h" BIGINT
-, "num_dev_win_1h" BIGINT
-, "denom_dev_win_1h" BIGINT
+, "num_dev_win_1h_conf" BIGINT
+, "num_dev_win_1h_val" BIGINT
 , "dev_vel_1h" BIGINT
 --
-, "num_usr_win_6h" BIGINT
-, "denom_usr_win_6h" BIGINT
+, "num_usr_win_6h_conf" BIGINT
+, "num_usr_win_6h_val" BIGINT
+, "denom_win_6h_conf" BIGINT
+, "denom_win_6h_val" BIGINT
 , "usr_vel_6h" BIGINT
-, "num_dev_win_6h" BIGINT
-, "denom_dev_win_6h" BIGINT
+, "num_dev_win_6h_conf" BIGINT
+, "num_dev_win_6h_val" BIGINT
 , "dev_vel_6h" BIGINT
 --
-, "num_usr_win_24h" BIGINT
-, "denom_usr_win_24h" BIGINT
+, "num_usr_win_24h_conf" BIGINT
+, "num_usr_win_24h_val" BIGINT
+, "denom_win_24h_conf" BIGINT
+, "denom_win_24h_val" BIGINT
 , "usr_vel_24h" BIGINT
-, "num_dev_win_24h" BIGINT
-, "denom_dev_win_24h" BIGINT
+, "num_dev_win_24h_conf" BIGINT
+, "num_dev_win_24h_val" BIGINT
 , "dev_vel_24h" BIGINT
 --
-, "num_usr_win_168h" BIGINT
-, "denom_usr_win_168h" BIGINT
+, "num_usr_win_168h_conf" BIGINT
+, "num_usr_win_168h_val" BIGINT
+, "denom_win_168h_conf" BIGINT
+, "denom_win_168h_val" BIGINT
 , "usr_vel_168h" BIGINT
-, "num_dev_win_168h" BIGINT
-, "denom_dev_win_168h" BIGINT
+, "num_dev_win_168h_conf" BIGINT
+, "num_dev_win_168h_val" BIGINT
 , "dev_vel_168h" BIGINT
 );
 
@@ -388,40 +428,50 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_440"
 , "fvalue" VARCHAR(256)
 , "confidence" INTEGER
 --
-, "num_usr_win_1h" BIGINT
-, "denom_usr_win_1h" BIGINT
+, "num_usr_win_1h_conf" BIGINT
+, "num_usr_win_1h_val" BIGINT
+, "denom_win_1h_conf" BIGINT
+, "denom_win_1h_val" BIGINT
 , "usr_vel_1h" BIGINT
-, "num_dev_win_1h" BIGINT
-, "denom_dev_win_1h" BIGINT
+, "num_dev_win_1h_conf" BIGINT
+, "num_dev_win_1h_val" BIGINT
 , "dev_vel_1h" BIGINT
 --
-, "num_usr_win_6h" BIGINT
-, "denom_usr_win_6h" BIGINT
+, "num_usr_win_6h_conf" BIGINT
+, "num_usr_win_6h_val" BIGINT
+, "denom_win_6h_conf" BIGINT
+, "denom_win_6h_val" BIGINT
 , "usr_vel_6h" BIGINT
-, "num_dev_win_6h" BIGINT
-, "denom_dev_win_6h" BIGINT
+, "num_dev_win_6h_conf" BIGINT
+, "num_dev_win_6h_val" BIGINT
 , "dev_vel_6h" BIGINT
 --
-, "num_usr_win_24h" BIGINT
-, "denom_usr_win_24h" BIGINT
+, "num_usr_win_24h_conf" BIGINT
+, "num_usr_win_24h_val" BIGINT
+, "denom_win_24h_conf" BIGINT
+, "denom_win_24h_val" BIGINT
 , "usr_vel_24h" BIGINT
-, "num_dev_win_24h" BIGINT
-, "denom_dev_win_24h" BIGINT
+, "num_dev_win_24h_conf" BIGINT
+, "num_dev_win_24h_val" BIGINT
 , "dev_vel_24h" BIGINT
 --
-, "num_usr_win_168h" BIGINT
-, "denom_usr_win_168h" BIGINT
+, "num_usr_win_168h_conf" BIGINT
+, "num_usr_win_168h_val" BIGINT
+, "denom_win_168h_conf" BIGINT
+, "denom_win_168h_val" BIGINT
 , "usr_vel_168h" BIGINT
-, "num_dev_win_168h" BIGINT
-, "denom_dev_win_168h" BIGINT
+, "num_dev_win_168h_conf" BIGINT
+, "num_dev_win_168h_val" BIGINT
 , "dev_vel_168h" BIGINT
 --
-, "num_usr_win_720h" BIGINT
-, "denom_usr_win_720h" BIGINT
+, "num_usr_win_720h_conf" BIGINT
+, "num_usr_win_720h_val" BIGINT
+, "denom_win_720h_conf" BIGINT
+, "denom_win_720h_val" BIGINT
 , "usr_vel_720h" BIGINT
--- , "num_dev_win_720h" BIGINT
--- , "denom_dev_win_720h" BIGINT
--- , "dev_vel_720h" BIGINT
+--, "num_dev_win_720h_conf" BIGINT
+--, "num_dev_win_720h_val" BIGINT
+--, "dev_vel_720h" BIGINT
 );
 
 CREATE OR REPLACE STREAM "fe_pipeline_step_500"
@@ -439,39 +489,49 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_500"
 , "fvalue" VARCHAR(256)
 , "confidence" INTEGER
 --
-, "num_usr_win_1h" BIGINT
-, "denom_usr_win_1h" BIGINT
+, "num_usr_win_1h_conf" BIGINT
+, "num_usr_win_1h_val" BIGINT
+, "denom_win_1h_conf" BIGINT
+, "denom_win_1h_val" BIGINT
 , "usr_vel_1h" BIGINT
-, "num_dev_win_1h" BIGINT
-, "denom_dev_win_1h" BIGINT
+, "num_dev_win_1h_conf" BIGINT
+, "num_dev_win_1h_val" BIGINT
 , "dev_vel_1h" BIGINT
 --
-, "num_usr_win_6h" BIGINT
-, "denom_usr_win_6h" BIGINT
+, "num_usr_win_6h_conf" BIGINT
+, "num_usr_win_6h_val" BIGINT
+, "denom_win_6h_conf" BIGINT
+, "denom_win_6h_val" BIGINT
 , "usr_vel_6h" BIGINT
-, "num_dev_win_6h" BIGINT
-, "denom_dev_win_6h" BIGINT
+, "num_dev_win_6h_conf" BIGINT
+, "num_dev_win_6h_val" BIGINT
 , "dev_vel_6h" BIGINT
 --
-, "num_usr_win_24h" BIGINT
-, "denom_usr_win_24h" BIGINT
+, "num_usr_win_24h_conf" BIGINT
+, "num_usr_win_24h_val" BIGINT
+, "denom_win_24h_conf" BIGINT
+, "denom_win_24h_val" BIGINT
 , "usr_vel_24h" BIGINT
-, "num_dev_win_24h" BIGINT
-, "denom_dev_win_24h" BIGINT
+, "num_dev_win_24h_conf" BIGINT
+, "num_dev_win_24h_val" BIGINT
 , "dev_vel_24h" BIGINT
 --
-, "num_usr_win_168h" BIGINT
-, "denom_usr_win_168h" BIGINT
+, "num_usr_win_168h_conf" BIGINT
+, "num_usr_win_168h_val" BIGINT
+, "denom_win_168h_conf" BIGINT
+, "denom_win_168h_val" BIGINT
 , "usr_vel_168h" BIGINT
-, "num_dev_win_168h" BIGINT
-, "denom_dev_win_168h" BIGINT
+, "num_dev_win_168h_conf" BIGINT
+, "num_dev_win_168h_val" BIGINT
 , "dev_vel_168h" BIGINT
--- 
-, "num_usr_win_720h" BIGINT
-, "denom_usr_win_720h" BIGINT
+--
+, "num_usr_win_720h_conf" BIGINT
+, "num_usr_win_720h_val" BIGINT
+, "denom_win_720h_conf" BIGINT
+, "denom_win_720h_val" BIGINT
 , "usr_vel_720h" BIGINT
-, "num_dev_win_720h" BIGINT
-, "denom_dev_win_720h" BIGINT
+, "num_dev_win_720h_conf" BIGINT
+, "num_dev_win_720h_val" BIGINT
 , "dev_vel_720h" BIGINT
 );
 
