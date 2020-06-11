@@ -97,9 +97,9 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_200"
 , "eval" VARCHAR(102400)
 , "tenantId" VARCHAR(256)
 , "score" VARCHAR(1024)
-, "fname" VARCHAR(128)
-, "fno" INTEGER
-, "fvalue" VARCHAR(256)
+, "fname" VARCHAR(128) NOT NULL
+, "fno" TINYINT NOT NULL
+, "fvalue" VARCHAR(256) NOT NULL
 );
 
 -- intermediate streams for window analysis
@@ -115,9 +115,9 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_400"
 , "neustar" VARCHAR(102400)
 , "eval" VARCHAR(102400)
 , "score" VARCHAR(1024)
-, "fname" VARCHAR(128)
-, "fno" INTEGER
-, "fvalue" VARCHAR(256)
+, "fname" VARCHAR(128) NOT NULL
+, "fno" TINYINT NOT NULL
+, "fvalue" VARCHAR(256) NOT NULL
 , "confidence" INTEGER
 --
 , "num_usr_win_1h_conf" BIGINT
@@ -140,9 +140,9 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_405"
 , "neustar" VARCHAR(102400)
 , "eval" VARCHAR(102400)
 , "score" VARCHAR(1024)
-, "fname" VARCHAR(128)
-, "fno" INTEGER
-, "fvalue" VARCHAR(256)
+, "fname" VARCHAR(128) NOT NULL
+, "fno" TINYINT NOT NULL
+, "fvalue" VARCHAR(256) NOT NULL
 , "confidence" INTEGER
 --
 , "num_usr_win_1h_conf" BIGINT
@@ -165,9 +165,9 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_410"
 , "neustar" VARCHAR(102400)
 , "eval" VARCHAR(102400)
 , "score" VARCHAR(1024)
-, "fname" VARCHAR(128)
-, "fno" INTEGER
-, "fvalue" VARCHAR(256)
+, "fname" VARCHAR(128) NOT NULL
+, "fno" TINYINT NOT NULL
+, "fvalue" VARCHAR(256) NOT NULL
 , "confidence" INTEGER
 --
 , "num_usr_win_1h_conf" BIGINT
@@ -199,9 +199,9 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_415"
 , "neustar" VARCHAR(102400)
 , "eval" VARCHAR(102400)
 , "score" VARCHAR(1024)
-, "fname" VARCHAR(128)
-, "fno" INTEGER
-, "fvalue" VARCHAR(256)
+, "fname" VARCHAR(128) NOT NULL
+, "fno" TINYINT NOT NULL
+, "fvalue" VARCHAR(256) NOT NULL
 , "confidence" INTEGER
 --
 , "num_usr_win_1h_conf" BIGINT
@@ -233,9 +233,9 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_420"
 , "neustar" VARCHAR(102400)
 , "eval" VARCHAR(102400)
 , "score" VARCHAR(1024)
-, "fname" VARCHAR(128)
-, "fno" INTEGER
-, "fvalue" VARCHAR(256)
+, "fname" VARCHAR(128) NOT NULL
+, "fno" TINYINT NOT NULL
+, "fvalue" VARCHAR(256) NOT NULL
 , "confidence" INTEGER
 --
 , "num_usr_win_1h_conf" BIGINT
@@ -276,9 +276,9 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_425"
 , "neustar" VARCHAR(102400)
 , "eval" VARCHAR(102400)
 , "score" VARCHAR(1024)
-, "fname" VARCHAR(128)
-, "fno" INTEGER
-, "fvalue" VARCHAR(256)
+, "fname" VARCHAR(128) NOT NULL
+, "fno" TINYINT NOT NULL
+, "fvalue" VARCHAR(256) NOT NULL
 , "confidence" INTEGER
 --
 , "num_usr_win_1h_conf" BIGINT
@@ -319,9 +319,9 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_430"
 , "neustar" VARCHAR(102400)
 , "eval" VARCHAR(102400)
 , "score" VARCHAR(1024)
-, "fname" VARCHAR(128)
-, "fno" INTEGER
-, "fvalue" VARCHAR(256)
+, "fname" VARCHAR(128) NOT NULL
+, "fno" TINYINT NOT NULL
+, "fvalue" VARCHAR(256) NOT NULL
 , "confidence" INTEGER
 --
 , "num_usr_win_1h_conf" BIGINT
@@ -371,9 +371,9 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_435"
 , "neustar" VARCHAR(102400)
 , "eval" VARCHAR(102400)
 , "score" VARCHAR(1024)
-, "fname" VARCHAR(128)
-, "fno" INTEGER
-, "fvalue" VARCHAR(256)
+, "fname" VARCHAR(128) NOT NULL
+, "fno" TINYINT NOT NULL
+, "fvalue" VARCHAR(256) NOT NULL
 , "confidence" INTEGER
 --
 , "num_usr_win_1h_conf" BIGINT
@@ -423,9 +423,9 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_440"
 , "neustar" VARCHAR(102400)
 , "eval" VARCHAR(102400)
 , "score" VARCHAR(1024)
-, "fname" VARCHAR(128)
-, "fno" INTEGER
-, "fvalue" VARCHAR(256)
+, "fname" VARCHAR(128) NOT NULL
+, "fno" TINYINT NOT NULL
+, "fvalue" VARCHAR(256) NOT NULL
 , "confidence" INTEGER
 --
 , "num_usr_win_1h_conf" BIGINT
@@ -484,9 +484,9 @@ CREATE OR REPLACE STREAM "fe_pipeline_step_500"
 , "neustar" VARCHAR(102400)
 , "eval" VARCHAR(102400)
 , "score" VARCHAR(1024)
-, "fname" VARCHAR(128)
-, "fno" INTEGER
-, "fvalue" VARCHAR(256)
+, "fname" VARCHAR(128) NOT NULL
+, "fno" TINYINT NOT NULL
+, "fvalue" VARCHAR(256) NOT NULL
 , "confidence" INTEGER
 --
 , "num_usr_win_1h_conf" BIGINT
