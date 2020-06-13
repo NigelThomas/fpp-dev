@@ -10,6 +10,8 @@ import time
 import argparse
 import csv
 import logging
+from datetime import datetime
+
 
 
 logger = logging.getLogger('generate_data')
@@ -237,6 +239,11 @@ for calltime in xrange(output_seconds):
         concat_features = {}
         record_time = calltime+startsecs
 
+#        if ((record_time % 3600) == 0):
+#            now = datetime.now()
+#            current_time = now.strftime("%H:%M:%S")
+#            logger.info(str(counter/3600) + " hours data generated at "+current_time)
+
         # choose a random subscriber
         user = users[random.randrange(len(users))]
         userId = user['id'];
@@ -262,6 +269,7 @@ for calltime in xrange(output_seconds):
 
         print json.dumps(concat_features)
    
+
     # If we want to trickle the data:
     if args.trickle:
         time.sleep(1)
