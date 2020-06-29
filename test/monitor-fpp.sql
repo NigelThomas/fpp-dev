@@ -37,6 +37,6 @@ join   serverstats over (range interval '30' second preceding) s on s.jkey = a.j
 
 create or replace view fpp_monitor_15 as
 select stream * from fpp_monitor s
-where  step(s.rowtime by interval '1' minute) = step(s.rowtime by interval '2' minute)
+where  step(s.rowtime by interval '1' minute) = step(s.rowtime by interval '15' minute)
 ;
 
